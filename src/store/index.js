@@ -10,6 +10,8 @@ const state = {
 
 const mutations = {
     saveAdminInfo(state, data) {
+        // data.date = new  Date().getTime();
+        // data.time = 3600;
         localStorage.setItem('userInfo', JSON.stringify(data));
         state.userInfo = data;
     },

@@ -6,7 +6,14 @@
             <el-breadcrumb-item v-for="(item, index) in $route.meta" :key="index">{{item}}</el-breadcrumb-item>
         </el-breadcrumb>
         <el-dropdown @command="handleCommand" menu-align='start'>
-            <img :src="baseImgPath + userInfo.avatar" class="avator">
+
+            <!--<div class="head_img">-->
+            <!---->
+            <!--&lt;!&ndash;<img :src="baseImgPath + userInfo.avatar" class="avator">&ndash;&gt;-->
+            <!--</div>-->
+            <!--<el-tag type="danger"  class="avator">标签五</el-tag>-->
+
+            <h2  v-text="username" style="margin-right: 50px"></h2>
             <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="home">首页</el-dropdown-item>
                 <el-dropdown-item command="singout">退出</el-dropdown-item>
@@ -24,10 +31,11 @@
         data() {
             return {
                 baseImgPath,
+                username:'',
             }
         },
         created() {
-            // console.log("adminInfo >>>>    " +  JSON.parse(this.userInfo).success)
+            this.testFunc();
         },
         computed: {
             ...mapState(['userInfo']),
@@ -55,7 +63,25 @@
                     }
                 }
             },
+            testFunc: (function (){
+
+                console.log("adminInfo >>>>   isEmptyObject  ")
+                if (!isEmptyObject(this.userInfo)) {
+                   // this.$refs.myElement
+                    console.log("adminInfo >>>>    " + JSON.stringify(this.userInfo))
+                   this.username=  JSON.parse(this.userInfo).data.username;
+                } else {
+                    console.log("adminInfo >>>>   isEmptyObject  ")
+                }
+            }),
         }
+    }
+
+    function isEmptyObject(obj) {
+        for (var key in obj) {
+            return false;
+        }
+        return true;
     }
 </script>
 
