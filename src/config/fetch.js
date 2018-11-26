@@ -4,7 +4,7 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 	type = type.toUpperCase();
 	url = baseUrl + url;
 
-	if (type === 'GET') {
+
 		let dataStr = ''; //数据拼接字符串
 		Object.keys(data).forEach(key => {
 			dataStr += key + '=' + data[key] + '&';
@@ -14,29 +14,29 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 			dataStr = dataStr.substr(0, dataStr.lastIndexOf('&'));
 			url = url + '?' + dataStr;
 		}
-	}
 
 	if (window.fetch && method === 'fetch') {
 		let requestConfig = {
-			credentials: 'include',
 			method: type,
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json'
 			},
-			mode: "cors",
-			cache: "force-cache"
 		}
 
-		if (type == 'POST') {
-			Object.defineProperty(requestConfig, 'body', {
-				value: JSON.stringify(data)
-			})
-		}
-		
+		// if (type === 'POST') {
+		// 	Object.defineProperty(requestConfig, 'body', {
+		// 		value: JSON.stringify(data)
+		// 	})
+		// }
+
 		try {
 			const response = await fetch(url, requestConfig);
 			const responseJson = await response.json();
+            console.log("请求地址 >>  " +url +"\n"+
+                              "请求类型 >>  "+ type+"\n" +
+                               "请求参数 >>  "+JSON.stringify(data) +"\n" +
+                              "返回JSON>> "+ JSON.stringify(responseJson))
 			return responseJson
 		} catch (error) {
 			throw new Error(error)
@@ -51,7 +51,7 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 			}
 
 			let sendData = '';
-			if (type == 'POST') {
+			if (type === 'POST') {
 				sendData = JSON.stringify(data);
 			}
 
@@ -60,8 +60,8 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 			requestObj.send(sendData);
 
 			requestObj.onreadystatechange = () => {
-				if (requestObj.readyState == 4) {
-					if (requestObj.status == 200) {
+				if (requestObj.readyState === 4) {
+					if (requestObj.status === 200) {
 						let obj = requestObj.response
 						if (typeof obj !== 'object') {
 							obj = JSON.parse(obj);

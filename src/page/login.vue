@@ -3,7 +3,7 @@
         <transition name="form-fade" mode="in-out">
             <section class="form_contianer" v-show="showLogin">
                 <div class="manage_tip">
-                    <p>elm后台管理系统</p>
+                    <p>后台管理系统</p>
                 </div>
                 <el-form :model="loginForm" :rules="rules" ref="loginForm">
                     <el-form-item prop="username">
@@ -27,7 +27,6 @@
 <script>
     import {login, getAdminInfo} from '@/api/getData'
     import {mapActions, mapState} from 'vuex'
-
 
     export default {
         data() {
@@ -60,29 +59,31 @@
             ...mapActions(['setUserInfo']),
             async submitForm(formName) {
                 this.$refs[formName].validate(async (valid) => {
-                    if (valid) {
-                        const res = await login({account: this.loginForm.username, password: this.loginForm.password})
-                        if (res.rtnCode === 200) {
-                            this.$message({
-                                type: 'success',
-                                message: '登录成功'
-                            });
-                            this.setUserInfo(res)
-                            this.$router.push('manage')
-                        } else {
-                            this.$message({
-                                type: 'error',
-                                message: res.msg
-                            });
-                        }
-                    } else {
-                        this.$notify.error({
-                            title: '错误',
-                            message: '请输入正确的用户名密码',
-                            offset: 100
-                        });
-                        return false;
-                    }
+                    this.$router.push('manage')
+                    // if (valid) {
+                    //     const res = await login({username: this.loginForm.username, password: this.loginForm.password})
+                    //     if (res.rtnCode === 200) {
+                    //         this.$message({
+                    //             type: 'success',
+                    //             message: '登录成功'
+                    //         });
+                    //         this.setUserInfo(res)
+                    //         this.$router.push('manage')
+                    //     } else {
+                    //         this.$message({
+                    //             type: 'error',
+                    //             message: res.msg
+                    //         });
+                    //
+                    //     }
+                    // } else {
+                    //     this.$notify.error({
+                    //         title: '错误',
+                    //         message: '请输入正确的用户名密码',
+                    //         offset: 100
+                    //     });
+                    //     return false;
+                    // }
                 });
             },
         },

@@ -11,17 +11,17 @@
                   width="100">
                 </el-table-column>
                 <el-table-column
-                  property="registe_time"
+                  property="birthday"
                   label="注册日期"
                   width="220">
                 </el-table-column>
                 <el-table-column
-                  property="username"
+                  property="doctorName"
                   label="用户姓名"
                   width="220">
                 </el-table-column>
                 <el-table-column
-                  property="city"
+                  property="title"
                   label="注册地址">
                 </el-table-column>
             </el-table>
@@ -41,30 +41,13 @@
 
 <script>
     import headTop from '../components/headTop'
-    import {getUserList, getUserCount} from '@/api/getData'
+    import {getFindDoctorByCondition, getUserCount} from '@/api/getData'
     export default {
         data(){
             return {
-                tableData: [{
-                  registe_time: '2016-05-02',
-                  username: '王小虎',
-                  city: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                  registe_time: '2016-05-04',
-                  username: '王小虎',
-                  city: '上海市普陀区金沙江路 1517 弄'
-                }, {
-                  registe_time: '2016-05-01',
-                  username: '王小虎',
-                  city: '上海市普陀区金沙江路 1519 弄'
-                }, {
-                  registe_time: '2016-05-03',
-                  username: '王小虎',
-                  city: '上海市普陀区金沙江路 1516 弄'
-                }],
+                tableData: [],
                 currentRow: null,
-                offset: 0,
-                limit: 20,
+                pageNum:1,
                 count: 0,
                 currentPage: 1,
             }
@@ -78,13 +61,20 @@
         methods: {
             async initData(){
                 try{
-                    const countData = await getUserCount();
-                    if (countData.status == 1) {
-                        this.count = countData.count;
+                    const doctorData = await getFindDoctorByCondition({hospitalDeptId: 1,pageNum: this.pageNum,pageSize:10});
+                    if (doctorData.code === 0) {
+                        this.count = doctorData.data.total;
+                        this.tableData = [];
+                        doctorData.data.list.forEach(item => {
+                            const tableData = {};
+                            tableData.doctorName = item.doctorName;
+                            tableData.birthday = item.birthday;
+                            tableData.title = item.title;
+                            this.tableData.push(tableData);
+                        })
                     }else{
                         throw new Error('获取数据失败');
                     }
-                    this.getUsers();
                 }catch(err){
                     console.log('获取数据失败', err);
                 }
@@ -93,20 +83,25 @@
                 console.log(`每页 ${val} 条`);
             },
             handleCurrentChange(val) {
-                this.currentPage = val;
-                this.offset = (val - 1)*this.limit;
-                this.getUsers()
+                console.log(val)
+                // this.currentPage = val;
+                // this.offset = (val - 1)*this.limit;
+                // this.getDoctorList()
             },
-            async getUsers(){
-                const Users = await getUserList({offset: this.offset, limit: this.limit});
-                this.tableData = [];
-                Users.forEach(item => {
-                    const tableData = {};
-                    tableData.username = item.username;
-                    tableData.registe_time = item.registe_time;
-                    tableData.city = item.city;
-                    this.tableData.push(tableData);
-                })
+            async getDoctorList(){
+                const doctorData = await getFindDoctorByCondition({hospitalDeptId: 1,pageNum: this.pageNum,pageSize:10});
+                if (doctorData.code === 0) {
+                    this.tableData = [];
+                    doctorData.data.list.forEach(item => {
+                        const tableData = {};
+                        tableData.doctorName = item.doctorName;
+                        tableData.birthday = item.birthday;
+                        tableData.title = item.title;
+                        this.tableData.push(tableData);
+                    })
+                }else{
+                    throw new Error('获取数据失败');
+                }
             }
         },
     }

@@ -18,6 +18,29 @@ export const signout = () => fetch('/admin/singout');
 
 export const getAdminInfo = () => fetch('/admin/info');
 
+
+/**
+ * 添加医生
+ */
+
+export const fetchAddDoctor = data => fetch('/doctor/addDoctor', data, 'POST');
+
+
+/**
+ * 获取所有医生列表
+ */
+
+export const getDoctorList = data => fetch('/doctor/selectAllDoctor');
+
+/**
+ * 根据条件查询医生分页信息
+ */
+export const getFindDoctorByCondition = data => fetch('/doctor/findDoctorByCondition',data,'POST');
+
+
+
+
+
 /**
  * api请求量
  */
@@ -80,7 +103,7 @@ export const cityGuess = () => fetch('/v1/cities', {
  * 添加商铺
  */
 
-export const addShop = data => fetch('/shopping/addShop', data, 'POST');
+export const addShop = data => fetch('/doctor/addDoctor', data, 'POST');
 
 /**
  * 获取搜索地址
@@ -185,11 +208,7 @@ export const updateFood = data => fetch('/shopping/v2/updatefood', data, 'POST')
 
 export const deleteFood = food_id => fetch('/shopping/v2/food/' + food_id, {}, 'DELETE');
 
-/**
- * 获取用户列表
- */
 
-export const getUserList = data => fetch('/v1/users/list', data);
 
 /**
  * 获取用户数量

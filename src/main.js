@@ -8,22 +8,22 @@ import 'element-ui/lib/theme-default/index.css'
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 
-router.beforeEach((to, from, next) => {
-    if (to.matched.some( m => m.meta.auth)) {
-        if(!isEmptyObject(store.state.userInfo)) {
-            next();
-        }
-        else {
-            next({
-                path: '/',
-                query: {redirect: to.fullPath}  // 将跳转的路由path作为参数，登录成功后跳转到该路由
-            })
-        }
-    }
-    else {
-        next();
-    }
-})
+// router.beforeEach((to, from, next) => {
+//     if (to.matched.some( m => m.meta.auth)) {
+//         if(!isEmptyObject(store.state.userInfo)) {
+//             next();
+//         }
+//         else {
+//             next({
+//                 path: '/',
+//                 query: {redirect: to.fullPath}  // 将跳转的路由path作为参数，登录成功后跳转到该路由
+//             })
+//         }
+//     }
+//     else {
+//         next();
+//     }
+// })
 
 function isEmptyObject(obj) {
     for (var key in obj) {

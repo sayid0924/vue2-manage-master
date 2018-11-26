@@ -7,12 +7,6 @@
         </el-breadcrumb>
         <el-dropdown @command="handleCommand" menu-align='start'>
 
-            <!--<div class="head_img">-->
-            <!---->
-            <!--&lt;!&ndash;<img :src="baseImgPath + userInfo.avatar" class="avator">&ndash;&gt;-->
-            <!--</div>-->
-            <!--<el-tag type="danger"  class="avator">标签五</el-tag>-->
-
             <h2  v-text="username" style="margin-right: 50px"></h2>
             <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="home">首页</el-dropdown-item>
@@ -44,11 +38,11 @@
             ...mapActions(['setUserInfo']),
             ...mapActions(['deteleUserInfo']),
             async handleCommand(command) {
-                if (command == 'home') {
+                if (command === 'home') {
                     this.$router.push('/manage');
-                } else if (command == 'singout') {
+                } else if (command === 'singout') {
                     const res = await signout()
-                    if (res.status == 1) {
+                    if (res.status === 1) {
                         this.$message({
                             type: 'success',
                             message: '退出成功'
@@ -64,15 +58,13 @@
                 }
             },
             testFunc: (function (){
-
-                console.log("adminInfo >>>>   isEmptyObject  ")
-                if (!isEmptyObject(this.userInfo)) {
-                   // this.$refs.myElement
-                    console.log("adminInfo >>>>    " + JSON.stringify(this.userInfo))
-                   this.username=  JSON.parse(this.userInfo).data.username;
-                } else {
-                    console.log("adminInfo >>>>   isEmptyObject  ")
-                }
+                // if (!isEmptyObject(this.userInfo)) {
+                //    // this.$refs.myElement
+                //     console.log("adminInfo >>>>    " + JSON.stringify(this.userInfo))
+                //    this.username=  JSON.parse(this.userInfo).data.username;
+                // } else {
+                //     console.log("adminInfo >>>>   isEmptyObject  ")
+                // }
             }),
         }
     }
