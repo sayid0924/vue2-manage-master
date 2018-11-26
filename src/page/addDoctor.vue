@@ -18,7 +18,7 @@
                     </el-form-item>
 
                     <el-form-item label="性别">
-                        <el-select v-model="sexValue" placeholder="请选择">
+                        <el-select v-model="formData.sex" placeholder="请选择">
                             <el-option
                                 v-for="item in sexOptions"
                                 :key="item.sexValue"
@@ -29,19 +29,19 @@
                     </el-form-item>
 
                     <el-form-item label="婚姻情况">
-                        <el-select v-model="value" placeholder="请选择">
+                        <el-select v-model="formData.marriage" placeholder="请选择">
                             <el-option
                                 v-for="item in marriageOptions"
-                                :key="item.value"
+                                :key="item.marriageValue"
                                 :label="item.label"
-                                :value="item.value">
+                                :value="item.marriageValue">
                             </el-option>
                         </el-select>
                     </el-form-item>
 
                     <el-form-item label="出生日期">
                         <el-date-picker
-                            v-model="birthday"
+                            v-model="formData.birthday"
                             type="date"
                             placeholder="选择日期">
                         </el-date-picker>
@@ -258,21 +258,21 @@
                 baseUrl,
                 baseImgPath,
                 sexOptions: [{
-                    sexValue: 'man',
+                    sexValue: 0,
                     label: '男性'
                 }, {
-                    sexValue: 'grild',
+                    sexValue: 1,
                     label: '女性'
                 }],
                 sexValue: '',
                 marriageOptions: [{
-                    value: '0',
+                    marriageValue: 0,
                     label: '未婚'
                 }, {
-                    value: '1',
+                    marriageValue: 1,
                     label: '已婚'
                 }],
-                value: '',
+                marriageValue: '',
                 isExpertOptions: [{
                     isExpertValue: '0',
                     label: '是'
