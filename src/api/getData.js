@@ -25,6 +25,14 @@ export const getAdminInfo = () => fetch('/admin/info');
 
 export const fetchAddDoctor = data => fetch('/doctor/addDoctor', data, 'POST');
 
+/**
+ * 删除医生信息
+ */
+
+export const fetchDeleteDoctor = data => fetch('/doctor/deleteDoctor', data,'GET');
+
+
+
 
 /**
  * 获取所有医生列表
