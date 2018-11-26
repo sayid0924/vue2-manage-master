@@ -1,5 +1,7 @@
 <template>
-    <div class="header_container">
+
+    <div class="header_container" >
+        <el-button  type="success" style="margin-right: 100px" v-on:click="hidSide" round>{{side}}</el-button>
 
         <el-breadcrumb separator="/">
             <el-breadcrumb-item :to="{ path: '/manage' }">首页</el-breadcrumb-item>
@@ -7,25 +9,31 @@
         </el-breadcrumb>
         <el-dropdown @command="handleCommand" menu-align='start'>
 
-            <h2  v-text="username" style="margin-right: 50px"></h2>
+            <h2 v-text="username" style="margin-right: 50px"></h2>
             <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="home">首页</el-dropdown-item>
                 <el-dropdown-item command="singout">退出</el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
+
+        <el-button  type="success" style="margin-right: 100px" v-on:click="handleSwitchScreen" round>{{screen}}</el-button>
+
     </div>
 </template>
 
 <script>
-    import {signout} from '@/api/getData'
     import {baseImgPath} from '@/config/env'
     import {mapActions, mapState} from 'vuex'
+    import { requestFullScreen,exitFullscreen} from '@/utils';
 
     export default {
         data() {
             return {
                 baseImgPath,
-                username:'',
+                username: '',
+                isFullScreen: false,
+                screen:'点击全屏',
+                side:'隐藏侧边栏',
             }
         },
         created() {
@@ -34,6 +42,7 @@
         computed: {
             ...mapState(['userInfo']),
         },
+
         methods: {
             ...mapActions(['setUserInfo']),
             ...mapActions(['deteleUserInfo']),
@@ -57,7 +66,7 @@
                     }
                 }
             },
-            testFunc: (function (){
+            testFunc: (function () {
                 // if (!isEmptyObject(this.userInfo)) {
                 //    // this.$refs.myElement
                 //     console.log("adminInfo >>>>    " + JSON.stringify(this.userInfo))
@@ -66,6 +75,21 @@
                 //     console.log("adminInfo >>>>   isEmptyObject  ")
                 // }
             }),
+            handleSwitchScreen () {
+                if (this.isFullScreen) {
+                    exitFullscreen()
+                    this.screen="点击全屏"
+                    this.isFullScreen = false
+                } else {
+                    requestFullScreen()
+                    this.screen="退出全屏"
+                    this.isFullScreen = true
+                }
+            },
+            hidSide(){
+
+
+            }
         }
     }
 
